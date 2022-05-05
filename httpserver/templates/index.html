@@ -22,7 +22,7 @@
                     var files = document.querySelector('#files_list');
                     files.innerHTML = "<option>Select file</option>";
                     let array = xmlhttp.responseText.split(';');
-                    if (!array.length) {
+                    if (array[0] == '') {
                         return;
                     }
                     array.forEach(function(item, index, response) {
@@ -45,11 +45,11 @@
                 var xmlhttp = new XMLHttpRequest();
                 // Define a callback function
                 xmlhttp.onload = function () {
+                    var tables = document.querySelector('#tables_list');
+                    tables.innerHTML = "<option>Select table</option>";
                     if (xmlhttp.status == 200) {
-                        var tables = document.querySelector('#tables_list');
-                        tables.innerHTML = "<option>Select table</option>"
                         let array = xmlhttp.responseText.split(';');
-                        if (!array.length) {
+                        if (array[0] == '') {
                             return;
                         }
                         array.forEach(function(item, index, response) {
@@ -80,7 +80,7 @@
             let req = new XMLHttpRequest();
             let formData = new FormData();
             formData.append("database", db);                     
-            req.open("POST", 'http://localhost:8000/db/post/');
+            req.open("POST", 'http://localhost:8000/db/post');
             req.send(formData);
         }
 

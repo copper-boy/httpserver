@@ -89,10 +89,8 @@
             if (files.value != "Select file") {
                 var xmlhttp = new XMLHttpRequest();
                 xmlhttp.onload = function () {
-                    if (xmlhttp.status == 200) {
-                        get_files_names();
-                        get_table_names();
-                    }
+                    get_files_names();
+                    get_table_names();
                 }
 
             // Send a request

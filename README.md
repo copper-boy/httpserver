@@ -9,3 +9,6 @@
 
 # Запуск
 **venv\Scripts\python.exe manage.py runserver** # Запускает сервак на айпи http://localhost:8000
+
+# Как войти?
+**http://localhost:8000/db**

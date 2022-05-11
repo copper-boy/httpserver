@@ -9,6 +9,7 @@ from django.core.files.storage import FileSystemStorage
 from sql_manager import SqlConnectionManager
 
 
+# главная страница
 def index(request: HttpRequest):
     if request.method == 'GET':
         file = request.GET.get('file')
@@ -20,6 +21,7 @@ def index(request: HttpRequest):
     return render(request, 'index.html')
 
 
+# удаление db и xlsx файла
 @csrf_exempt
 def delete(request: HttpRequest, file_name):
     os.remove(os.path.join('sql', file_name))
@@ -27,6 +29,7 @@ def delete(request: HttpRequest, file_name):
     return index(request)
 
 
+# добавление dv файла и создание excel файлов методом из sql_manager.py
 @csrf_exempt
 def post(request: HttpRequest):
     database_file = request.FILES['database']
@@ -36,6 +39,7 @@ def post(request: HttpRequest):
     return index(request)
 
 
+# возвращаем файл, чтобы пользователь мог скачать его
 def excel(request: HttpRequest, file: str, table: str):
     if os.path.exists(f'excel/{file.split(".")[0]}/{table}'):
         return FileResponse(open(f'excel/{file.split(".")[0]}/{table}', 'rb'))

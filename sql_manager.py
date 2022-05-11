@@ -19,11 +19,11 @@ class SqlConnectionManager:
             ...
 
     def create_excel_files(self, file: str):
-        tables = self.get_tables_list()
+        tables = self.get_tables_list() # получаем список таблиц
         for table in tables:
             pd.read_sql_query(f'SELECT * FROM {table};', self.connection). \
                 to_excel(f'excel/{file.split(".")[0]}/{table}.xlsx', index=True)
-
+        # записали все данные из таблиц в excel files
     def get_tables_list(self) -> list[str]:
         return ';'.join(map(str, pd.read_sql_query("SELECT name FROM sqlite_master WHERE type='table';",
                                                    self.connection).values.tolist())). \

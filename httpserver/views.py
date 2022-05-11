@@ -29,7 +29,7 @@ def delete(request: HttpRequest, file_name):
     return index(request)
 
 
-# добавление dv файла и создание excel файлов методом из sql_manager.py
+# добавление db файла и создание excel файлов методом из sql_manager.py
 @csrf_exempt
 def post(request: HttpRequest):
     database_file = request.FILES['database']

@@ -8,7 +8,7 @@
     <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
     
     <script>
-        function get_files_names() {
+        function getFilesNames() {
             var xmlhttp = new XMLHttpRequest();
 
             // Define a callback function
@@ -33,7 +33,7 @@
             xmlhttp.send();
         }
 
-        function get_table_names() {
+        function getTableNames() {
             var files = document.querySelector('#files_list');
 
             if (files.value != "Select file") {
@@ -58,7 +58,7 @@
             }
         }
 
-        function download_excel() {
+        function downloadExcel() {
             var files = document.querySelector('#files_list');
             var tables = document.querySelector('#tables_list');
             
@@ -70,7 +70,7 @@
             }
         }
 
-        function send_database_file() {
+        function sendDatabaseFile() {
             let db = document.getElementById("database").files[0];
             let req = new XMLHttpRequest();
             let formData = new FormData();
@@ -79,7 +79,7 @@
             req.send(formData);
         }
 
-        function delete_database_file() {
+        function deleteDatabaseFile() {
             var files = document.querySelector('#files_list');
             if (files.value != "Select file") {
                 var xmlhttp = new XMLHttpRequest();
@@ -94,7 +94,7 @@
             }
         }
 
-        function show_table() {
+        function showTable() {
             var files = document.querySelector('#files_list');
             var tables = document.querySelector('#tables_list');
             
@@ -108,28 +108,28 @@
                         return;
                     }
                     var data = new Uint8Array(xhr.response);
-                    var work_book = XLSX.read(data, {type:'array'});
-                    var sheet_name = work_book.SheetNames;
-                    var sheet_data = XLSX.utils.sheet_to_json(work_book.Sheets[sheet_name[0]], {header:1});
+                    var workBook = XLSX.read(data, {type:'array'});
+                    var sheetName = work_book.SheetNames;
+                    var sheetData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetName[0]], {header:1});
                     
-                    if (sheet_data.length > 0) {
-                        var table_output = '<table class="table table-striped table-bordered">';
+                    if (sheetData.length > 0) {
+                        var tableOutput = '<table class="table table-striped table-bordered">';
                         
-                        for(var row = 0; row < sheet_data.length; row++) {
-                            table_output += '<tr>';
+                        for(var row = 0; row < sheetData.length; row++) {
+                            tableOutput += '<tr>';
                             
-                            for(var cell = 0; cell < sheet_data[row].length; cell++) {
+                            for(var cell = 0; cell < sheetData[row].length; cell++) {
                                 if(row == 0) {
-                                    table_output += '<th>'+sheet_data[row][cell]+'</th>';
+                                    tableOutput += '<th>'+sheetData[row][cell]+'</th>';
                                 }
                                 else {
-                                    table_output += '<td>'+sheet_data[row][cell]+'</td>';
+                                    tableOutput += '<td>'+sheetData[row][cell]+'</td>';
                                 }
                             }
-                            table_output += '</tr>';
+                            tableOutput += '</tr>';
                         }
-                        table_output += '</table>';
-                        document.getElementById('excel_data').innerHTML = table_output;
+                        tableOutput += '</table>';
+                        document.getElementById('excel_data').innerHTML = tableOutput;
                     }
                 }
                 xhr.send();
@@ -147,14 +147,14 @@
         <option>Select table</option>
     </select>
 
-    <button type="button" onclick="get_files_names()">Update files list</button>
-    <button type="button" onclick="get_table_names()">Update tables list</button>
-    <button type="button" onclick="send_database_file()">Send database file</button>
+    <button type="button" onclick="getFilesNames()">Update files list</button>
+    <button type="button" onclick="getTableNames()">Update tables list</button>
+    <button type="button" onclick="sendDatabaseFile()">Send database file</button>
     <input type="file" name="file" id="database">
-    <button type="button" onclick="delete_database_file()">Delete database file</button>
-    <button type="button" onclick="download_excel()">Set download reference</button>
+    <button type="button" onclick="deleteDatabaseFile()">Delete database file</button>
+    <button type="button" onclick="downloadExcel()">Set download reference</button>
     <a id="reference" href="">Download reference</a>
-    <button type="button" onclick="show_table()">Show table</button>
+    <button type="button" onclick="showTable()">Show table</button>
     <div id="excel_data" class="mt-5"></div>
 </body>
 
